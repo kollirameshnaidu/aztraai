@@ -1,0 +1,9 @@
+class NextLoopinglines{static instances=[];constructor(element){const style=getComputedStyle(element);Object.assign(this,{lineList:element.querySelector('.dan-looping-lines__line-list'),lines:element.querySelector('.dan-looping-lines__line-list').children,lineHeight:parseFloat(style.getPropertyValue('--line-height')),linesToShow:parseInt(style.getPropertyValue('--lines-to-show')),totallines:element.querySelector('.dan-looping-lines__line-list').children.length,currentIndex:0,animationDuration:parseFloat(element.getAttribute("data-duration"))||1,ease:element.getAttribute("data-easing")||'bounce',interval:null});this.initialize()}
+initialize(){this.interval=setTimeout(()=>{this.movelines();this.startAnimation()},this.animationDuration*1000)}
+movelines=()=>{this.currentIndex++;gsap.to(this.lineList,{y:-this.lineHeight*this.currentIndex,duration:this.animationDuration,ease:this.ease,onComplete:()=>{if(this.currentIndex>=this.totallines-this.linesToShow){this.lineList.appendChild(this.lineList.children[0]);this.currentIndex--;gsap.set(this.lineList,{y:-this.lineHeight*this.currentIndex})}}})}
+startAnimation(){if(this.interval)clearInterval(this.interval);this.interval=setInterval(this.movelines,this.animationDuration*2*1000)}
+destroy(){if(this.interval){clearInterval(this.interval);clearTimeout(this.interval)}
+gsap.killTweensOf(this.lineList);gsap.set(this.lineList,{y:0})}
+static destroyAll(){NextLoopinglines.instances.forEach(instance=>instance.destroy());NextLoopinglines.instances=[]}}
+const dancepad_looping_lines=()=>{NextLoopinglines.destroyAll();document.querySelectorAll('.dan-looping-lines').forEach(element=>NextLoopinglines.instances.push(new NextLoopinglines(element)))}
+;

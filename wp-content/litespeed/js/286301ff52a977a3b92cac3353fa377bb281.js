@@ -1,0 +1,12 @@
+class NextAnysideButton{static instances=[];constructor(element){Object.assign(this,{element,type:element.getAttribute("data-type"),clickDuration:parseFloat(element.getAttribute("data-durationclick")),hoverDiv:element.querySelector("div"),dimensions:element.getBoundingClientRect(),observer:null,eventListeners:[]});this.initialize()}
+initialize(){if(this.type==="hover"){this.initializeHover()}else if(this.type==="click"){this.initializeClick()}}
+initializeHover(){this.setupHoverObserver();this.setupHoverEvents()}
+setupHoverObserver(){this.observer=new MutationObserver(()=>{const rect=this.element.getBoundingClientRect();const width=`${rect.width * 3}px`;const height=`${rect.height * 3}px`;this.hoverDiv.style.width=width;this.hoverDiv.style.height=height});this.observer.observe(document.body,{attributes:!0,childList:!0,subtree:!0})}
+setupHoverEvents(){const handleMouseEvent=(event)=>{this.hoverDiv.style.left=`${event.offsetX}px`;this.hoverDiv.style.top=`${event.offsetY}px`};['mouseenter','mouseleave'].forEach(eventType=>{this.element.addEventListener(eventType,handleMouseEvent);this.eventListeners.push({type:eventType,handler:handleMouseEvent})})}
+initializeClick(){const handleClick=(event)=>{const x=event.clientX-this.dimensions.left;const y=event.clientY-this.dimensions.top;const span=document.createElement("span");span.classList.add("dan-anyside-button__anyside-span");span.style.left=`${x}px`;span.style.top=`${y}px`;this.element.appendChild(span);setTimeout(()=>{span.remove()},this.clickDuration)};this.element.addEventListener('click',handleClick);this.eventListeners.push({type:'click',handler:handleClick})}
+destroy(){if(this.observer){this.observer.disconnect()}
+this.eventListeners.forEach(({type,handler})=>{this.element.removeEventListener(type,handler)});if(this.type==="hover"&&this.hoverDiv){this.hoverDiv.style.removeProperty('width');this.hoverDiv.style.removeProperty('height');this.hoverDiv.style.removeProperty('left');this.hoverDiv.style.removeProperty('top')}
+if(this.type==="click"){this.element.querySelectorAll('.dan-anyside-button__anyside-span').forEach(span=>span.remove())}}
+static destroyAll(){NextAnysideButton.instances.forEach(instance=>instance.destroy());NextAnysideButton.instances=[]}}
+const dancepad_anyside_button=()=>{NextAnysideButton.destroyAll();document.querySelectorAll(".dan-anyside-button").forEach(element=>NextAnysideButton.instances.push(new NextAnysideButton(element)))}
+;

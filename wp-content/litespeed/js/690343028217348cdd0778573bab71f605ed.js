@@ -1,0 +1,21 @@
+class NextDrawer{constructor(drawer){this.element=drawer.querySelector('.dan-drawer__drawer');this.drawer=this.element;this.dragHandle=this.element.querySelector('.dan-drawer__drag');this.overlay=this.element.parentElement.querySelector('.dan-drawer__overlay');this.state={isDragging:!1,wasDragged:!1,startY:0};this.config={trigger:drawer.getAttribute('data-trigger'),openDefault:drawer.getAttribute('data-opendefault')==='1',closeOutside:drawer.getAttribute('data-close-outside')==='1'};this.handleDrag=this.handleDrag.bind(this);this.handleDragEnd=this.handleDragEnd.bind(this);this.handleEscKey=this.handleEscKey.bind(this);this.toggleDrawer=this.toggleDrawer.bind(this);this.init()}
+static instances=[];static destroyAll(){NextDrawer.instances.forEach(instance=>instance.destroy());NextDrawer.instances=[]}
+init(){this.setupInitialState();this.bindEvents()}
+setupInitialState(){if(this.config.openDefault){this.openDrawer()}}
+bindEvents(){document.querySelectorAll(this.config.trigger).forEach(trigger=>{trigger.addEventListener('click',()=>{this.drawer.style.bottom='0';this.toggleDrawer()})});if(!this.config.closeOutside){this.overlay.addEventListener('click',this.toggleDrawer)}
+document.addEventListener('keydown',this.handleEscKey);this.drawer.parentElement.addEventListener('pointerdown',(e)=>{if(e.target===this.drawer||e.target===this.dragHandle){this.startDrag(e)}})}
+startDrag(event){this.state.isDragging=!0;this.state.startY=event.clientY;document.addEventListener('pointermove',this.handleDrag);document.addEventListener('pointerup',this.handleDragEnd)}
+handleDrag(event){if(!this.state.isDragging)return;const deltaY=event.clientY-this.state.startY;if(deltaY>0){this.drawer.style.bottom=`-${deltaY}px`;this.state.wasDragged=!0}}
+handleDragEnd(){if(!this.state.isDragging)return;this.state.isDragging=!1;if(this.state.wasDragged){this.toggleDrawer();this.state.wasDragged=!1}
+document.removeEventListener('pointermove',this.handleDrag);document.removeEventListener('pointerup',this.handleDragEnd)}
+handleEscKey(event){if(event.key==='Escape'&&this.overlay.hasAttribute('data-open')){this.toggleDrawer()}}
+toggleDrawer(){this.toggleBodyState();this.toggleOverlay();this.toggleDrawerState()}
+toggleBodyState(){const html=document.documentElement;if(html.hasAttribute('dan-burger--body-toggled')){html.removeAttribute('dan-burger--body-toggled')}else{html.setAttribute('dan-burger--body-toggled','')}}
+toggleOverlay(){if(this.overlay.hasAttribute('data-open')){this.overlay.removeAttribute('data-open');this.overlay.setAttribute('data-close','')}else{this.overlay.removeAttribute('data-close');this.overlay.setAttribute('data-open','')}}
+toggleDrawerState(){if(this.drawer.hasAttribute('data-open')){this.drawer.removeAttribute('data-open');this.drawer.setAttribute('data-close','');this.drawer.style.transform='translateY(0%)'}else{this.drawer.removeAttribute('data-close');this.drawer.setAttribute('data-open','')}}
+openDrawer(){this.overlay.setAttribute('data-open','');this.drawer.setAttribute('data-open','')}
+closeDrawer(){this.overlay.removeAttribute('data-open');this.drawer.removeAttribute('data-open');this.drawer.style.transform='';this.drawer.style.bottom=''}
+destroy(){document.removeEventListener('keydown',this.handleEscKey);document.removeEventListener('pointermove',this.handleDrag);document.removeEventListener('pointerup',this.handleDragEnd);if(!this.config.closeOutside){this.overlay?.removeEventListener('click',this.toggleDrawer)}
+document.querySelectorAll(this.config.trigger).forEach(trigger=>{trigger.removeEventListener('click',this.toggleDrawer)});this.closeDrawer();this.overlay?.removeAttribute('data-open');this.overlay?.removeAttribute('data-close');this.drawer?.removeAttribute('data-open');this.drawer?.removeAttribute('data-close');this.drawer?.parentElement?.removeAttribute('data-edit');document.documentElement.removeAttribute('dan-burger--body-toggled');this.drawer=null;this.dragHandle=null;this.overlay=null}}
+function dancepad_drawer(){NextDrawer.destroyAll();document.querySelectorAll('.dan-drawer').forEach(drawer=>{const instance=new NextDrawer(drawer);NextDrawer.instances.push(instance)})}
+;

@@ -1,0 +1,104 @@
+.bde-header-builder-529-111 {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent !important;
+  z-index: 1200 !important;
+}
+.bde-header-builder-529-111 .bde-header-builder__container {
+  width: min(1280px, calc(100vw - 32px));
+  margin-top: 10px;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  border-radius: 16px;
+  border: 0;
+  backdrop-filter: saturate(140%) blur(10px);
+  background: transparent;
+}
+.bde-header-builder-529-111 .az-header-menu__toggle {
+  color: #fff;
+}
+.hero_home {
+  position: relative;
+  min-height: 100vh;
+  overflow: clip;
+}
+.hero_home .section-container {
+  position: relative;
+  min-height: 100vh;
+}
+.hero_home .az-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #0b1020;
+}
+.hero_home .az-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hero_home .az-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8,12,20,.10) 0%, rgba(8,12,20,.16) 15%, rgba(8,12,20,.74) 100%);
+}
+.hero_home .dan-spotlight-v2-wrapper-6-911,
+.hero_home .dan-particles-6-101 {
+  position: relative;
+  z-index: 1;
+}
+.hero_home .dan-particles-6-101 {
+  min-height: 100vh;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(96px, 12vh, 140px) 24px 40px;
+}
+.hero_home .dan-particles-6-101 > canvas,
+.hero_home .dan-particles-6-101 .particles-js-canvas-el {
+  display: none !important;
+}
+.hero_home .bde-fancy-container-6-265,
+.hero_home .bde-div-6-117,
+.hero_home .bde-div-6-115 {
+  width: min(980px, 100%);
+  margin-inline: auto;
+  align-items: center;
+  text-align: center;
+}
+.hero_home .bde-div-6-105 {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.breakdance .bde-div-6-1095 {
+  background: transparent !important;
+  background-color: transparent !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.hero_home .bde-text-6-104 {
+  max-width: 760px;
+  margin-inline: auto;
+}
+@media (max-width: 767px) {
+  .hero_home .dan-particles-6-101 {
+    padding-top: 92px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .hero_home .dan-looping-lines__line-list {
+    font-size: 2rem;
+  }
+  .hero_home .bde-heading-6-102 {
+    font-size: clamp(1.85rem, 8vw, 2.7rem);
+  }
+}
+
+

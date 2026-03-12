@@ -1,0 +1,15 @@
+.bde-logo-list-6-248 .un-logo-bar__logo-wrapper {
+  min-height: 44px;
+}
+.bde-logo-list-6-248 .un-logo-bar__marquee-content {
+  animation-duration: 14s !important;
+}
+.bde-logo-list-6-248 .un-logo-bar__logo-wrapper img {
+  height: auto !important;
+  max-height: 44px;
+  width: auto;
+  display: block;
+  opacity: 1 !important;
+}
+
+
